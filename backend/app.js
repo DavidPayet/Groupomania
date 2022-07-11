@@ -4,6 +4,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 
+const usersRoutes = require('./routes/users');
+
 const app = express();
 
 mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PWD}@${process.env.DB_CLUSTER}.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
@@ -24,6 +26,9 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 });
+
+// Accès aux routes principales
+app.use('/api/auth', usersRoutes);
 
 // Export de l'application
 module.exports = app;
