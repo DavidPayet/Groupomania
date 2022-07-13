@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const Post = require('../models/Post');
 const fs = require('fs');
 
@@ -25,36 +27,38 @@ exports.createPost = (req, res, next) => {
 
 exports.modifyPost = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
-  .then(post => {
-    
-    // Vérifie l'id de l'auteur du post
-      if (post.userId !== req.auth.userId) {
+    .then(post => {
+
+      if (post.userId === req.auth.userId || req.auth.userId === process.env.DB_ADMIN) {
+        // MÀJ du fichier dans le dossier images en cas de modification unique de l'image du post
+        if (req.file) {
+          Post.findOne({ _id: req.params.id })
+            .then(post => {
+              const filename = post.imageUrl.split('/images/')[1];
+
+              fs.unlink(`images/${filename}`, (error) => {
+                if (error) throw error
+              })
+            })
+            .catch(error => res.status(400).json({ error }))
+        }
+
+        // MÀJ du post
+        const postObject = req.file ?
+          {
+            ...JSON.parse(req.body.post),
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+          } : { ...req.body };
+
+        Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
+          .then(() => res.status(200).json({ message: 'Post modifié !' }))
+          .catch(error => res.status(400).json({ error }))
+
+      }
+      // Vérifie l'id de l'auteur du post
+      else if (post.userId !== req.auth.userId || req.auth.userId !== process.env.DB_ADMIN) {
         return res.status(401).json({ error: new Error('Requête non autorisée !') })
       }
-
-      // MÀJ du fichier dans le dossier images en cas de modification unique de l'image du post
-      if (req.file) {
-        Post.findOne({ _id: req.params.id })
-          .then(post => {
-            const filename = post.imageUrl.split('/images/')[1];
-
-            fs.unlink(`images/${filename}`, (error) => {
-              if (error) throw error
-            })
-          })
-          .catch(error => res.status(400).json({ error }))
-      }
-
-      // MÀJ du post
-      const postObject = req.file ?
-        {
-          ...JSON.parse(req.body.post),
-          imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-        } : { ...req.body };
-
-      Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Post modifié !' }))
-        .catch(error => res.status(400).json({ error }))
 
     })
 }
@@ -66,19 +70,21 @@ exports.deletePost = (req, res, next) => {
       if (!post) {
         return res.status(404).json({ error: new Error('Post non trouvé !') })
       }
-      if (post.userId !== req.auth.userId) {
+
+
+      if (post.userId === req.auth.userId || req.auth.userId === process.env.DB_ADMIN) {
+        const filename = post.imageUrl.split('/images/')[1];
+
+        fs.unlink(`images/${filename}`, () => {
+          // Supprime le post sélectionné
+          Post.deleteOne({ _id: req.params.id })
+            .then(() => res.status(200).json({ message: 'Post supprimé !' }))
+            .catch(error => res.status(400).json({ error }))
+        })
+
+      } else if (post.userId !== req.auth.userId || req.auth.userId !== process.env.DB_ADMIN) {
         return res.status(401).json({ error: new Error('Requête non autorisée !') })
       }
-
-      const filename = post.imageUrl.split('/images/')[1];
-
-      fs.unlink(`images/${filename}`, () => {
-        // Supprime le post sélectionné
-        Post.deleteOne({ _id: req.params.id })
-          .then(() => res.status(200).json({ message: 'Post supprimé !' }))
-          .catch(error => res.status(400).json({ error }))
-
-      })
     })
 }
 
