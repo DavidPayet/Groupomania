@@ -24,3 +24,21 @@ h2 {
   text-align: center;
   font-size: calc(1rem + 1.5vw);
 }
+
+.ctaBtn {
+  width: 220px;
+  min-height: 40px;
+  margin: 40px auto;
+  border-radius: 50px;
+  border: none;
+  font-size: 18px;
+  font-family: 'Lato', sans-serif;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+.ctaBtn:hover {
+  background: var(--secondary-color);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px -25px 18px -14px inset;
+  transition: all .1s ease-out;
+}
