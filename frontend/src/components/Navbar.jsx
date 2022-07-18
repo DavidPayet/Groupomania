@@ -18,7 +18,7 @@ export default function Navbar() {
         </Link>
         <div className={`menu ${toggleNav && "active"}`}>
           <Link to='/accueil'>Accueil</Link>
-          <Link to='/connexion'>Connexion</Link>
+          <Link to='/'>Déconnexion</Link>
         </div>
       </nav>
 
