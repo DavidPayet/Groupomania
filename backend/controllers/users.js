@@ -11,15 +11,21 @@ exports.signup = (req, res, next) => {
       // Crée un nouveau User avec le mot de passe hashé
       const user = new User({
         email: req.body.email,
-        password: hash
-        // isAdmin: req.body.isAdmin
+        password: hash,
+        isAdmin: false
       })
       // Enregistre le nouvel utilisateur dans la base de données
       user.save()
         .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-        .catch(error => res.status(400).json({ error }))
+        .catch(error => {
+          res.status(409).json({ error })
+          console.log(error._message, 'ERROR 409 Utilisateur existe déjà');
+        })
     })
-    .catch(error => res.status(500).json({ error }))
+    .catch(error => {
+      res.status(500).json({ error })
+      console.log(error, 'ERROR 500 PB server');
+    })
 }
 
 exports.login = (req, res, next) => {
