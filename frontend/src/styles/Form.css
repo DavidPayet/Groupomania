@@ -55,7 +55,7 @@ h3 {
   flex-direction: column;
 }
 
-.form-bloc label {
+/* .form-bloc label {
   color: white;
   margin: 20px 0;
   font-weight: 300;
@@ -76,7 +76,7 @@ h3 {
 
 .form-bloc input:nth-last-child(1n) {
   margin-bottom: 20px;
-}
+} */
 
 span.required-field {
   color: white;

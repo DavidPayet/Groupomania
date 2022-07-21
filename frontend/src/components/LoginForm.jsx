@@ -14,14 +14,27 @@ export default function LoginForm({ showLoginForm, toggleLoginForm }) {
 
         <h3>Connectez-vous</h3>
 
-        <form className='form-bloc'>
-          <label htmlFor='email'>Email* : </label>
-          <input type='email' id='email' name='email' placeholder='example@email.com' required />
+        <form className='form-bloc' method='post'>
+          <label htmlFor='login-email'>Email* : </label>
+          <input
+            type='email'
+            id='login-email'
+            name='login-email'
+            placeholder='example@email.com'
+            required
+          />
 
-          <label htmlFor='password'>Mot de passe* : </label>
-          <input type='password' id='password' name='password' placeholder='Saisissez un mot de passe' required />
+          <label htmlFor='login-password'>Mot de passe* : </label>
+          <input
+            type='password'
+            id='login-password'
+            name='login-password'
+            placeholder='Saisissez un mot de passe'
+            autoComplete="off"
+            required
+          />
 
-          <button className='ctaBtn' type='submit'>Valider</button>
+          <button className='ctaBtn' type='submit'>Se Connecter</button>
         </form>
 
         <span className='required-field'>* Champs obligatoires</span>
