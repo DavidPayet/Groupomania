@@ -1,19 +1,14 @@
 import { useState } from 'react'
-// import { useNavigate } from 'react-router-dom'
 import '../styles/Form.css'
 import FormInputs from './FormInputs'
 
 export default function SignupForm({ showSignupForm, toggleSignupForm }) {
-
-  // const navigate = useNavigate()
   const [user, setUser] = useState({
     email: '',
     password: '',
     passwordConf: ''
   })
-
   const [accountCreated, setAccountCreated] = useState(false)
-
   const inputs = [
     {
       id: 'email',
@@ -55,9 +50,6 @@ export default function SignupForm({ showSignupForm, toggleSignupForm }) {
   const onChange = e => {
     setUser({ ...user, [e.target.name]: e.target.value })
   }
-  console.log(user);
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -76,7 +68,7 @@ export default function SignupForm({ showSignupForm, toggleSignupForm }) {
         res.clone().json()
         if (res.status === 201) {
           setUser({ email: '', password: '', passwordConf: '' })
-          setAccountCreated(!accountCreated)
+          setAccountCreated(accountCreated === true)
           alert('Compte créé avec succès ! \n Vous pouvez dès à présent vous connecter.')
           toggleSignupForm()
         }
@@ -85,10 +77,7 @@ export default function SignupForm({ showSignupForm, toggleSignupForm }) {
         }
       })
       .catch(error => console.log(error))
-
-    // console.log(JSON.stringify({ email, password }));
   }
-
 
   return (
     <div className={`${showSignupForm && 'active'} Form`}>
@@ -97,7 +86,7 @@ export default function SignupForm({ showSignupForm, toggleSignupForm }) {
           className='closeBtn'
           onClick={toggleSignupForm}
         >
-          X
+          ╳
         </button>
 
         <h3>Inscrivez-vous</h3>
@@ -116,7 +105,8 @@ export default function SignupForm({ showSignupForm, toggleSignupForm }) {
                 {...input}
                 value={user[input.name]}
                 onChange={onChange}
-                accountCreated={setAccountCreated}
+                accountCreated={accountCreated}
+                isloginform="false"
               />
             ))
           }

@@ -4,20 +4,23 @@
   left: 50%;
   transform: translate(-50%, -50%);
   visibility: hidden;
-  background: rgba(0, 0, 0, 0.554);
+  background: rgba(0, 0, 0, 0.632);
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0;
+  transition: all .4s ease-out;
 }
 
 .Form.active {
   visibility: visible;
+  opacity: 1;
 }
 
 .closeBtn {
-  font-size: 30px;
+  font-size: 25px;
   cursor: pointer;
   color: white;
   background: transparent;
@@ -28,17 +31,19 @@
 .form-container {
   width: 500px;
   min-height: 600px;
-  border: 1px solid white;
+  border: 1px solid rgba(255, 255, 255, 0.184);
   border-radius: 10px;
   background: var(--tertiary-color);
   padding: 30px;
   margin: 40px;
-  transform: scale(0.2);
-  transition: all .2s ease-in-out;
+  transform: translateX(50px);
+  transition: all .4s ease-out;
+  opacity: 0;
 }
 
 .form-container.active {
-  transform: scale(1);
+  transform: translateX(0);
+  opacity: 1;
 }
 
 h3 {
@@ -54,29 +59,6 @@ h3 {
   display: flex;
   flex-direction: column;
 }
-
-/* .form-bloc label {
-  color: white;
-  margin: 20px 0;
-  font-weight: 300;
-  padding-left: 5px;
-  font-size: 18px;
-}
-
-.form-bloc input {
-  padding: 15px 0;
-  border-radius: 5px;
-  border: none;
-  font-size: 16px;
-}
-
-.form-bloc input::placeholder {
-  padding-left: 5px;
-}
-
-.form-bloc input:nth-last-child(1n) {
-  margin-bottom: 20px;
-} */
 
 span.required-field {
   color: white;
