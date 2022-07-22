@@ -29,6 +29,7 @@ export default function ConnectionPage() {
         <button className='ctaBtn' onClick={toggleSignupForm}>S'inscrire</button>
         <span className='or'>OU</span>
         <button className='ctaBtn' onClick={toggleLoginForm}>Se connecter</button>
+        
         <SignupForm
           showSignupForm={showSignupForm}
           toggleSignupForm={toggleSignupForm}
