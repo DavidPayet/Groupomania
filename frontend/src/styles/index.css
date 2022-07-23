@@ -23,6 +23,7 @@ body {
 h2 {
   text-align: center;
   font-size: calc(1rem + 1.5vw);
+  margin: 20px 0;
 }
 
 .ctaBtn {
