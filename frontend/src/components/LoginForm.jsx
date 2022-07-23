@@ -58,7 +58,7 @@ export default function LoginForm({ showLoginForm, toggleLoginForm }) {
         if (res.status === 200) {
           setUser({ email: '', password: '' })
           // setAccountCreated(!accountCreated)
-          console.log('Connection Réussit');
+          console.log('Connection Réussit', res);
           toggleLoginForm()
           navigate('/accueil')
         }
