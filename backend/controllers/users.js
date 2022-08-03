@@ -34,12 +34,14 @@ exports.login = (req, res, next) => {
       if (!user) {
         return res.status(401).json({ error: 'Utilisateur non trouvé !' })
       }
+
       // Compare le MDP d'entré avec le hash
       bcrypt.compare(req.body.password, user.password)
         .then(valid => {
           if (!valid) {
             return res.status(418).json({ error: 'Mot de passe incorrect !' })
           }
+
           res.status(200).json({
             userId: user._id,
             token: jwt.sign(
@@ -48,8 +50,15 @@ exports.login = (req, res, next) => {
               { expiresIn: '24h' }
             )
           })
+
         })
-        .catch(error => res.status(500).json({ error }))
+        .catch(error => {
+          res.status(500).json({ error })
+          console.log(error);
+        })
     })
-    .catch(error => res.status(500).json({ error }))
+    .catch(error => {
+      res.status(500).json({ error })
+      console.log(error, '============');
+    })
 }

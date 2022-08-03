@@ -1,14 +1,15 @@
 import { useState } from 'react'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import '../styles/Form.css'
 import FormInputs from './FormInputs'
+import axios from 'axios'
 
 export default function LoginForm({ showLoginForm, toggleLoginForm }) {
   const [user, setUser] = useState({
     email: '',
     password: ''
   })
-  // const [accountCreated, setAccountCreated] = useState(false)
+
   const inputs = [
     {
       id: 'logemail',
@@ -34,43 +35,41 @@ export default function LoginForm({ showLoginForm, toggleLoginForm }) {
       errorMessage: 'Votre mot de passe doit contenir au moins 6 caractères, 1 chiffres, 1 lettres majuscules, 1 caractère spécial.'
     }
   ]
+
   const navigate = useNavigate()
 
   const onChange = e => {
     setUser({ ...user, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = async (e) => {
+  const { email, password } = user
+
+  const handleSubmit = async e => {
     e.preventDefault()
 
-    const { email, password } = user
-
-    await fetch(`http://localhost:8000/api/auth/login`, {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    })
+    await axios.post(`http://localhost:8000/api/auth/login`, { email, password })
       .then(res => {
-        res.clone().json()
+        console.log(res);
         if (res.status === 200) {
           setUser({ email: '', password: '' })
-          // setAccountCreated(!accountCreated)
-          console.log('Connection Réussit', res);
+          console.log('Connection Réussit', res)
+          sessionStorage.setItem("user", JSON.stringify(res.data))
           toggleLoginForm()
-          navigate('/accueil')
-        }
-        if (res.status === 401) {
-          alert("Ce compte n'existe pas. \n Veuillez essayer avec un email valide ou créez un compte.");
-        }
-        if (res.status === 418) {
-          alert("Mot de passe incorrect !");
+          // navigate('/accueil')
         }
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        console.log('======CATCH=======', error)
+        if (error.response.status === 401) {
+          alert("Ce compte n'existe pas. \n Veuillez essayer avec un email valide ou créez un compte.");
+        }
+        if (error.response.status === 418) {
+          alert("Mot de passe incorrect !")
+        }
+
+      })
   }
+
 
   return (
     <div className={`${showLoginForm && 'active'} Form`}>
@@ -98,8 +97,6 @@ export default function LoginForm({ showLoginForm, toggleLoginForm }) {
                 {...input}
                 value={user[input.name]}
                 onChange={onChange}
-                // accountCreated={setAccountCreated}
-                isloginform="true"
               />
             ))
           }
