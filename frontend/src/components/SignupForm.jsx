@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import '../styles/Form.css'
 import FormInputs from './FormInputs'
+import axios from 'axios'
 
 export default function SignupForm({ showSignupForm, toggleSignupForm }) {
   const [user, setUser] = useState({
@@ -8,7 +9,7 @@ export default function SignupForm({ showSignupForm, toggleSignupForm }) {
     password: '',
     passwordConf: ''
   })
-  const [accountCreated, setAccountCreated] = useState(false)
+
   const inputs = [
     {
       id: 'email',
@@ -51,32 +52,26 @@ export default function SignupForm({ showSignupForm, toggleSignupForm }) {
     setUser({ ...user, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = async (e) => {
+
+  const { email, password } = user
+
+  const handleSubmit = async e => {
     e.preventDefault()
 
-    const { email, password } = user
-
-    await fetch(`http://localhost:8000/api/auth/signup`, {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    })
+    await axios.post(`http://localhost:8000/api/auth/signup`, { email, password })
       .then(res => {
-        res.clone().json()
         if (res.status === 201) {
           setUser({ email: '', password: '', passwordConf: '' })
-          setAccountCreated(accountCreated === true)
           alert('Compte créé avec succès ! \n Vous pouvez dès à présent vous connecter.')
           toggleSignupForm()
         }
-        if (res.status === 409) {
+      })
+      .catch(error => {
+        console.log(error)
+        if (error.response.status === 409) {
           alert('Cet email possède déjà un compte');
         }
       })
-      .catch(error => console.log(error))
   }
 
   return (
@@ -105,8 +100,6 @@ export default function SignupForm({ showSignupForm, toggleSignupForm }) {
                 {...input}
                 value={user[input.name]}
                 onChange={onChange}
-                accountCreated={accountCreated}
-                isloginform="false"
               />
             ))
           }
