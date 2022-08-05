@@ -19,7 +19,6 @@ export default function HomePage() {
       .then(response => {
         setResponse(response.data)
         setIsloading(!isLoading)
-        console.log(response)
 
         response.status === 400 && console.log('Problème de récupération de données !!!')
       })

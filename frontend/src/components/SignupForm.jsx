@@ -58,7 +58,8 @@ export default function SignupForm({ showSignupForm, toggleSignupForm }) {
   const handleSubmit = async e => {
     e.preventDefault()
 
-    await axios.post(`http://localhost:8000/api/auth/signup`, { email, password })
+    await axios
+      .post(`http://localhost:8000/api/auth/signup`, { email, password })
       .then(res => {
         if (res.status === 201) {
           setUser({ email: '', password: '', passwordConf: '' })
