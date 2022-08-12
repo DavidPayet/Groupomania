@@ -1,6 +1,5 @@
-import axios from "axios"
+import axios from 'axios'
 import jwtDecode from 'jwt-decode'
-
 
 export function hasAuthenticated() {
   const token = sessionStorage.getItem('userToken')
@@ -21,16 +20,21 @@ export async function login(credentials) {
         sessionStorage.setItem('userID', response.data.userId)
         sessionStorage.setItem('userToken', response.data.token)
         // sessionStorage.setItem('userData', JSON.stringify(response.data))
+
         return true
       }
     })
     .catch(error => {
       console.log('======CATCH=======', error)
       if (error.response.status === 401) {
-        alert("Ce compte n'existe pas. \n Veuillez essayer avec un email valide ou créez un compte.");
+        // alert("Ce compte n'existe pas. \n Veuillez essayer avec un email valide ou créez un compte.")
+        sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert', activeClassName: 'alert', message: "Ce compte n'existe pas. \n Veuillez essayer avec un email valide ou créez un compte." }))
+
       }
       if (error.response.status === 418) {
-        alert("Mot de passe incorrect !")
+        // alert("Mot de passe incorrect !")
+        sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert', activeClassName: 'alert', message: "Mot de passe incorrect !" }))
+
       }
     })
 }
