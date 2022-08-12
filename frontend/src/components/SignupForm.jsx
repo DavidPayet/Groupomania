@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import '../styles/Form.css'
 import FormInputs from './FormInputs'
+import { signupInputs } from '../utils/formInputsAttributes'
 import axios from 'axios'
 
 export default function SignupForm({ showSignupForm, toggleSignupForm }) {
@@ -10,53 +11,14 @@ export default function SignupForm({ showSignupForm, toggleSignupForm }) {
     passwordConf: ''
   })
 
-  const inputs = [
-    {
-      id: 'email',
-      name: 'email',
-      type: 'email',
-      placeholder: 'exemple@email.com',
-      required: true,
-      autoComplete: 'on',
-      label: 'Email*',
-      htmlFor: 'email',
-      errorMessage: 'Veuillez saisir un email valide.'
-    },
-    {
-      id: 'password',
-      name: 'password',
-      type: 'password',
-      placeholder: 'Saisissez un mot de passe',
-      required: true,
-      autoComplete: 'off',
-      label: 'Mot de passe*',
-      htmlFor: 'password',
-      pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,50}$`,
-      errorMessage: 'Votre mot de passe doit contenir au moins 6 caractères, 1 chiffres, 1 lettres majuscules, 1 caractère spécial.'
-    },
-    {
-      id: 'passwordConf',
-      name: 'passwordConf',
-      type: 'password',
-      placeholder: 'Confirmez votre mot de passe',
-      required: true,
-      autoComplete: 'off',
-      label: 'Confirmer*',
-      htmlFor: 'passwordConf',
-      pattern: user.password,
-      errorMessage: 'Votre mot de passe ne correspond pas.'
-    },
-  ]
-
   const onChange = e => {
     setUser({ ...user, [e.target.name]: e.target.value })
   }
 
-
-  const { email, password } = user
-
   const handleSubmit = async e => {
     e.preventDefault()
+    
+    const { email, password } = user
 
     await axios
       .post(`http://localhost:8000/api/auth/signup`, { email, password })
@@ -94,7 +56,7 @@ export default function SignupForm({ showSignupForm, toggleSignupForm }) {
         >
 
           {
-            inputs.map(input => (
+            signupInputs.map(input => (
               <FormInputs
                 key={input.id}
                 id={input.id}

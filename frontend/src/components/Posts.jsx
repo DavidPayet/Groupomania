@@ -1,7 +1,7 @@
 import profilIcon from '../assets/profile-icon.svg'
 import thumbUp from '../assets/thumbup-icon.svg'
 
-export default function Posts({post}) {
+export default function Posts({ post }) {
   return (
     <div className="one-post">
       <div className="profil">

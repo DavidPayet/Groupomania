@@ -2,63 +2,41 @@ import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../styles/Form.css'
 import FormInputs from './FormInputs'
+import { loginInputs } from '../utils/formInputsAttributes'
 import Auth from '../contexts/Auth'
 import { login } from '../services/authApi'
+import Modal from './Modal'
 
 export default function LoginForm({ showLoginForm, toggleLoginForm }) {
   const [user, setUser] = useState({
     email: '',
     password: ''
   })
-
-  const inputs = [
-    {
-      id: 'logemail',
-      name: 'email',
-      type: 'email',
-      placeholder: 'exemple@email.com',
-      required: true,
-      autoComplete: 'on',
-      label: 'Email*',
-      htmlFor: 'email',
-      errorMessage: 'Veuillez saisir un email valide.'
-    },
-    {
-      id: 'logpassword',
-      name: 'password',
-      type: 'password',
-      placeholder: 'Saisissez votre mot de passe',
-      required: true,
-      autoComplete: 'off',
-      label: 'Mot de passe*',
-      htmlFor: 'password',
-      pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,50}$`,
-      errorMessage: 'Votre mot de passe doit contenir au moins 6 caractères, 1 chiffres, 1 lettres majuscules, 1 caractère spécial.'
-    }
-  ]
-
   const navigate = useNavigate()
   const { isAuthenticated, setIsAuthenticated } = useContext(Auth)
   const userId = sessionStorage.getItem('userID')
-
+  let modalParams;
+  
+  
   const onChange = e => {
     setUser({ ...user, [e.target.name]: e.target.value })
   }
-
-  // const { email, password } = user
-
+  
   const handleSubmit = async e => {
     e.preventDefault()
-
+    
     try {
       const response = await login(user)
-
+      modalParams = JSON.parse(sessionStorage.getItem('modalParams'))
+      
       setIsAuthenticated(response)
-
-    } catch ({ response }) {
       console.log('RESPONSE CATCH', response);
-    }
+      
+      console.log(modalParams.message)
 
+    } catch ({ error }) {
+      console.log('ERROR CATCH', error);
+    }
   }
 
   useEffect(() => {
@@ -84,7 +62,7 @@ export default function LoginForm({ showLoginForm, toggleLoginForm }) {
         >
 
           {
-            inputs.map(input => (
+            loginInputs.map(input => (
               <FormInputs
                 key={input.id}
                 id={input.id}
@@ -100,6 +78,14 @@ export default function LoginForm({ showLoginForm, toggleLoginForm }) {
 
         <span className='required-field'>* Champs obligatoires</span>
       </div>
+      <Modal 
+      id='alert'
+      activeClassName='alert'
+      message="Mot de passe incorrect !"
+      // id={modalParams.id}
+      // activeClassName={modalParams.activeClassName}
+      // message={modalParams.message}
+      />
     </div>
   )
 };
