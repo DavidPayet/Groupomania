@@ -7,7 +7,7 @@ export default function SendPost() {
   const { userId } = useParams()
   const userToken = sessionStorage.getItem('userToken')
   const [description, setDescription] = useState('')
-  const [imageUrl, setImageUrl] = useState('')
+  const [imageUrl, setImageUrl] = useState(null)
 
   const handleChangePost = e => {
     setDescription(e.target.value)
@@ -16,6 +16,12 @@ export default function SendPost() {
   const handleChangeImgUrl = e => {
     setImageUrl(e.target.files[0])
   }
+
+  const clearInput = () => {
+    document.querySelector('textarea').value = ''
+    document.querySelector('input').value = null
+  }
+
 
   const handleSend = async e => {
     e.preventDefault()
@@ -39,13 +45,19 @@ export default function SendPost() {
         }
       )
       .then(res => {
-        // res.status === 201 && setSendPost({ userId: '', description: '', imageUrl: '', __v: 0 })
-        console.log('====== RESPONSE ======', res);
+        if (res.status === 201) {
+          console.log('====== RESPONSE ======', res);
+          setDescription('')
+          setImageUrl(null)
+          clearInput()
+          console.log('====== RESPONSE ======', { userId, description, imageUrl });
+
+        }
 
       })
       .catch(error => {
         console.log('====== ERROR ======', error);
-        console.log({ userId, description, imageUrl });
+        console.log('====== ERROR ======', { userId, description, imageUrl });
       })
   }
 
@@ -70,7 +82,12 @@ export default function SendPost() {
         ></textarea>
 
         <label htmlFor='file'>Ajoutez un fichier image</label>
-        <input id='imageUrl' type='file' name='imageUrl' onChange={handleChangeImgUrl} />
+        <input
+          id='imageUrl'
+          type='file'
+          name='imageUrl'
+          onChange={handleChangeImgUrl}
+        />
 
         <button className='ctaBtn'>Envoyer</button>
       </form>
