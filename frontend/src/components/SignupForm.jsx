@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import '../styles/Form.css'
 import FormInputs from './FormInputs'
+import Modal from './Modal'
 import { signupInputs } from '../utils/formInputsAttributes'
 import axios from 'axios'
 
@@ -10,29 +11,43 @@ export default function SignupForm({ showSignupForm, toggleSignupForm }) {
     password: '',
     passwordConf: ''
   })
+  const modalParams = JSON.parse(sessionStorage.getItem('modalParams'))
+  const [visibleModal, setVisibleModal] = useState(false)
 
   const onChange = e => {
     setUser({ ...user, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = async e => {
+  const handleSignup = async e => {
     e.preventDefault()
-    
-    const { email, password } = user
+
+    const { email, password, passwordConf } = user
+
+    if (passwordConf !== password) {
+      sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert401', activeClassName: 'alert', message: "Les mots de passe sont différents." }))
+      setVisibleModal(true)
+      return
+    }
 
     await axios
       .post(`http://localhost:8000/api/auth/signup`, { email, password })
       .then(res => {
         if (res.status === 201) {
           setUser({ email: '', password: '', passwordConf: '' })
-          alert('Compte créé avec succès ! \n Vous pouvez dès à présent vous connecter.')
+          // alert('Compte créé avec succès ! \n Vous pouvez dès à présent vous connecter.')
+          sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert201', activeClassName: 'succes', message: "Compte créé avec succès ! \n Vous pouvez dès à présent vous connecter." }))
           toggleSignupForm()
+          setVisibleModal(true)
+          return
         }
       })
       .catch(error => {
         console.log(error)
         if (error.response.status === 409) {
-          alert('Cet email possède déjà un compte');
+          // alert('Cet email possède déjà un compte');
+          sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert401', activeClassName: 'alert', message: "Cet email possède déjà un compte." }))
+          setVisibleModal(true)
+          return
         }
       })
   }
@@ -52,7 +67,7 @@ export default function SignupForm({ showSignupForm, toggleSignupForm }) {
         <form
           className='form-bloc'
           method='post'
-          onSubmit={handleSubmit}
+          onSubmit={handleSignup}
         >
 
           {
@@ -72,6 +87,16 @@ export default function SignupForm({ showSignupForm, toggleSignupForm }) {
 
         <span className='required-field'>* Champs obligatoires</span>
       </div>
+
+      {
+        visibleModal && <Modal
+          id={modalParams.id}
+          activeClassName={modalParams.activeClassName}
+          message={modalParams.message}
+          visibleModal={setVisibleModal}
+        />
+      }
+
     </div>
   )
 };

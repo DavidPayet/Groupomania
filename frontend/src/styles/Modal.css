@@ -1,6 +1,6 @@
 .Modal {
   width: 400px;
-  height: 50px;
+  min-height: 50px;
   font-size: 18px;
   border-radius: 5px;
   position: absolute;
@@ -8,6 +8,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   box-shadow: 0 0 18px 0 rgba(0, 0, 0, .75);
+  z-index: 99;
+  padding: 20px;
 }
 
 .Modal > p {
@@ -28,18 +30,17 @@
 
 .Modal.succes {
   background: rgba(37, 100, 54, 0.997);
-  border: 1px solid rgb(1, 255, 1);
+  border: 1px solid #01ff01;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .Modal.succes > p {
-  color: rgb(1, 255, 1);
+  color: #01ff01;
 }
 
-.closeModalBtn.alert {
-    color: red;
+.closeModalBtn.alert, .closeModalBtn.succes {
     position: absolute;
     top: 5px;
     right: 5px;
@@ -48,4 +49,12 @@
     border: none;
     font-size: 20px;
     font-weight: 300;
+}
+
+.closeModalBtn.alert {
+  color: red;
+}
+
+.closeModalBtn.succes {
+  color: #01ff01;
 }

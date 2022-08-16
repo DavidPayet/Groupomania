@@ -19,7 +19,9 @@ export async function login(credentials) {
       if (response.status === 200) {
         sessionStorage.setItem('userID', response.data.userId)
         sessionStorage.setItem('userToken', response.data.token)
+        sessionStorage.setItem('isAdmin', response.data.isAdmin)
         // sessionStorage.setItem('userData', JSON.stringify(response.data))
+        console.log('===== RES AUTH =====', response);
 
         return true
       }
@@ -28,13 +30,11 @@ export async function login(credentials) {
       console.log('======CATCH=======', error)
       if (error.response.status === 401) {
         // alert("Ce compte n'existe pas. \n Veuillez essayer avec un email valide ou créez un compte.")
-        sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert', activeClassName: 'alert', message: "Ce compte n'existe pas. \n Veuillez essayer avec un email valide ou créez un compte." }))
-
+        sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert401', activeClassName: 'alert', message: "Ce compte n'existe pas. \n Veuillez essayer avec un email valide ou créez un compte." }))
       }
       if (error.response.status === 418) {
         // alert("Mot de passe incorrect !")
-        sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert', activeClassName: 'alert', message: "Mot de passe incorrect !" }))
-
+        sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert418', activeClassName: 'alert', message: "Mot de passe incorrect !" }))
       }
     })
 }
