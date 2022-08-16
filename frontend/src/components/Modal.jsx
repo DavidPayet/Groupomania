@@ -1,17 +1,22 @@
-import { useState } from 'react';
-import { createPortal } from 'react-dom'
 import '../styles/Modal.css'
+import { createPortal } from 'react-dom'
 
-export default function Modal({ message, activeClassName }) {
-  const [closeModal, setCloseModal] = useState(false)
+export default function Modal({ id, message, activeClassName, visibleModal }) {
+  // const [closeModal, setCloseModal] = useState(false)
 
-  // console.log(closeModal);
+
+  const handleCloseModal = () => {
+    console.log('MODAL CLOSED');
+
+    document.querySelector('.Modal').style.display = 'none'
+    visibleModal(false)
+  }
 
   return createPortal(
-    <div className={`Modal ${activeClassName}`}>
+    <div id={id} className={`Modal ${activeClassName}`}>
       <button
         className={`closeModalBtn ${activeClassName}`}
-        onClick={() => setCloseModal(!closeModal)}
+        onClick={handleCloseModal}
       >
         ╳
       </button>

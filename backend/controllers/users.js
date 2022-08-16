@@ -48,7 +48,8 @@ exports.login = (req, res, next) => {
               { userId: user._id },
               process.env.RANDOM_TOKEN_SECRET,
               { expiresIn: '24h' }
-            )
+            ),
+            isAdmin: user.isAdmin
           })
 
         })

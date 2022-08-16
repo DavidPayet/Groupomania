@@ -15,26 +15,26 @@ export default function LoginForm({ showLoginForm, toggleLoginForm }) {
   const navigate = useNavigate()
   const { isAuthenticated, setIsAuthenticated } = useContext(Auth)
   const userId = sessionStorage.getItem('userID')
-  let modalParams;
-  
-  
+  const modalParams = JSON.parse(sessionStorage.getItem('modalParams'))
+  const [visibleModal, setVisibleModal] = useState(false)
+
+
   const onChange = e => {
     setUser({ ...user, [e.target.name]: e.target.value })
   }
-  
-  const handleSubmit = async e => {
+
+  const handleLogin = async e => {
     e.preventDefault()
-    
+
     try {
       const response = await login(user)
-      modalParams = JSON.parse(sessionStorage.getItem('modalParams'))
-      
-      setIsAuthenticated(response)
-      console.log('RESPONSE CATCH', response);
-      
-      console.log(modalParams.message)
 
-    } catch ({ error }) {
+      response === true && setIsAuthenticated(response)
+      response !== true && setVisibleModal(true)
+
+      console.log('RESPONSE CATCH', response);
+
+    } catch (error) {
       console.log('ERROR CATCH', error);
     }
   }
@@ -58,7 +58,7 @@ export default function LoginForm({ showLoginForm, toggleLoginForm }) {
         <form
           className='form-bloc'
           method='post'
-          onSubmit={handleSubmit}
+          onSubmit={handleLogin}
         >
 
           {
@@ -78,14 +78,16 @@ export default function LoginForm({ showLoginForm, toggleLoginForm }) {
 
         <span className='required-field'>* Champs obligatoires</span>
       </div>
-      <Modal 
-      id='alert'
-      activeClassName='alert'
-      message="Mot de passe incorrect !"
-      // id={modalParams.id}
-      // activeClassName={modalParams.activeClassName}
-      // message={modalParams.message}
-      />
+
+      {
+        visibleModal && <Modal
+          id={modalParams.id}
+          activeClassName={modalParams.activeClassName}
+          message={modalParams.message}
+          visibleModal={setVisibleModal}
+        />
+      }
+
     </div>
   )
 };
