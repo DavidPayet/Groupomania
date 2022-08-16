@@ -32,7 +32,7 @@ export default function LoginForm({ showLoginForm, toggleLoginForm }) {
       response === true && setIsAuthenticated(response)
       response !== true && setVisibleModal(true)
 
-      console.log('RESPONSE CATCH', response);
+      console.log('RESPONSE TRY', response);
 
     } catch (error) {
       console.log('ERROR CATCH', error);
