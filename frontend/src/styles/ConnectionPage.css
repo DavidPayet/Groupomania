@@ -23,6 +23,10 @@
   flex-direction: column;
 }
 
+.right-side a {
+  width: max-content;
+}
+
 .icon-right {
   width: 45px;
 }

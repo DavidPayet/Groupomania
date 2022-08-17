@@ -3,6 +3,7 @@ import SignupForm from '../components/SignupForm'
 import LoginForm from '../components/LoginForm'
 import iconSecondary from '../assets/icon-secondary.svg'
 import '../styles/ConnectionPage.css'
+import { Link } from 'react-router-dom'
 
 export default function ConnectionPage() {
   const [showSignupForm, setShowSignupForm] = useState(false)
@@ -23,7 +24,9 @@ export default function ConnectionPage() {
       </div>
 
       <div className="right-side">
-        <img className='icon-right' src={iconSecondary} alt="icone groupomania" />
+        <Link to="/accueil">
+          <img className='icon-right' src={iconSecondary} alt="icone groupomania" />
+        </Link>
         <h1>Groupomania</h1>
         <p>Rejoignez le réseau social de votre entreprise.</p>
         <button className='ctaBtn' onClick={toggleSignupForm}>S'inscrire</button>
