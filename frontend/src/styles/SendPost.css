@@ -27,6 +27,11 @@ font-weight: 300;
   height: 100px;
   padding: 10px;
   margin-bottom: 30px;
+  border-radius: 5px;
+}
+
+input #file-upload-button {
+  background: red;
 }
 
 .sendPost-form input[type='file'] {
