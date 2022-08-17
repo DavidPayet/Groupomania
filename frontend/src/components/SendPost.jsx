@@ -2,12 +2,15 @@ import axios from 'axios';
 import { useState } from 'react'
 import { useParams } from 'react-router-dom';
 import '../styles/SendPost.css'
+import Modal from './Modal';
 
 export default function SendPost() {
   const { userId } = useParams()
   const userToken = sessionStorage.getItem('userToken')
   const [description, setDescription] = useState('')
   const [imageUrl, setImageUrl] = useState(null)
+  const modalParams = JSON.parse(sessionStorage.getItem('modalParams'))
+  const [visibleModal, setVisibleModal] = useState(false)
 
   const handleChangePost = e => {
     setDescription(e.target.value)
@@ -27,9 +30,9 @@ export default function SendPost() {
     e.preventDefault()
     const bodyFormData = new FormData()
 
-    bodyFormData.append('userId', userId);
-    bodyFormData.append('description', description);
-    bodyFormData.append('image', imageUrl);
+    bodyFormData.append('userId', userId)
+    bodyFormData.append('description', description)
+    bodyFormData.append('image', imageUrl)
 
     await axios
       .post(`http://localhost:8000/api/posts`,
@@ -50,6 +53,8 @@ export default function SendPost() {
           setDescription('')
           setImageUrl(null)
           clearInput()
+          sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert201', activeClassName: 'succes', message: "Post envoyé avec succès !" }))
+          setVisibleModal(true)
           console.log('====== RESPONSE ======', { userId, description, imageUrl });
 
         }
@@ -58,6 +63,8 @@ export default function SendPost() {
       .catch(error => {
         console.log('====== ERROR ======', error);
         console.log('====== ERROR ======', { userId, description, imageUrl });
+        sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert400', activeClassName: 'alert', message: "Votre post n'a pas pu être envoyé." }))
+        setVisibleModal(true)
       })
   }
 
@@ -91,6 +98,14 @@ export default function SendPost() {
 
         <button className='ctaBtn'>Envoyer</button>
       </form>
+      {
+        visibleModal && <Modal
+          id={modalParams.id}
+          activeClassName={modalParams.activeClassName}
+          message={modalParams.message}
+          visibleModal={setVisibleModal}
+        />
+      }
     </div>
   )
 };

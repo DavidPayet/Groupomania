@@ -17,23 +17,45 @@ exports.createPost = (req, res, next) => {
   // Supprime l'id du front
   delete postObject._id
 
-  const post = new Post({
-    ...postObject,
-    likes: 0,
-    dislikes: 0,
-    usersLiked: [],
-    usersDisliked: [],
-    // Génère l'URL d'une image
-    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-  })
+  if (postObject.image === 'null') {
 
-  // Enregistre le model dans la base de données
-  post.save()
-    .then(() => res.status(201).json({ message: 'Post enregistré !' }))
-    .catch(error => {
-      res.status(400).json({ error })
-      console.log(error);
+    const postWithoutImg = new Post({
+      ...postObject,
+      likes: 0,
+      dislikes: 0,
+      usersLiked: [],
+      usersDisliked: []
     })
+
+    // Enregistre le model dans la base de données
+    postWithoutImg.save()
+      .then(() => res.status(201).json({ message: 'Post enregistré !' }))
+      .catch(error => {
+        res.status(400).json({ error })
+        console.log(error);
+      })
+
+  } else {
+
+    const post = new Post({
+      ...postObject,
+      likes: 0,
+      dislikes: 0,
+      usersLiked: [],
+      usersDisliked: [],
+      // Génère l'URL d'une image
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    })
+
+    // Enregistre le model dans la base de données
+    post.save()
+      .then(() => res.status(201).json({ message: 'Post enregistré !' }))
+      .catch(error => {
+        res.status(400).json({ error })
+        console.log(error);
+      })
+
+  }
 }
 
 exports.modifyPost = (req, res, next) => {
@@ -104,7 +126,7 @@ exports.deletePost = (req, res, next) => {
           } else if (post.userId !== req.auth.userId || !user.isAdmin) {
             return res.status(401).json({ error: new Error('Requête non autorisée !') })
           }
-          
+
         })
 
     })
