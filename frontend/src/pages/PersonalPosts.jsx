@@ -30,7 +30,6 @@ export default function PersonalPosts() {
 
     // eslint-disable-next-line
   }, [])
-  console.log(response);
 
 
   return (
