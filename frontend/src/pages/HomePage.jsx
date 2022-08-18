@@ -2,7 +2,6 @@ import axios from 'axios'
 import Navbar from '../components/Navbar'
 import Header from '../components/Header'
 import Posts from '../components/Posts'
-import '../styles/HomePage.css'
 import { useState } from 'react'
 import { useEffect } from 'react'
 
