@@ -11,22 +11,33 @@ export default function PersonalPosts() {
   const [isLoading, setIsloading] = useState(true)
   const params = useParams()
   const userId = params.userId
+  const userToken = sessionStorage.getItem('userToken')
+  const isAdmin = JSON.parse(sessionStorage.getItem('isAdmin'))
+
 
   useEffect(() => {
     axios({
       method: 'GET',
-      url: `http://localhost:8000/api/posts`,
-      headers: { accept: '*/*' }
+      url: `http://localhost:8000/api/my-posts`,
+      headers: {
+        'Authorization': `Bearer ${userToken}`,
+        'Content-Type': 'multipart/form-data'
+      }
     })
       .then(response => {
-        const myPosts = response.data.filter(el => el.userId === userId)
+        const myPosts = response.data
 
-        setResponse(myPosts)
-        setIsloading(!isLoading)
+        if (isAdmin === true) {
+          setResponse(myPosts)
+          setIsloading(!isLoading)
+
+        } else {
+          setResponse(myPosts.filter(el => el.userId === userId))
+          setIsloading(!isLoading)
+        }
 
         response.status === 400 && console.log('Problème de récupération de données !!!')
       })
-      .then()
 
     // eslint-disable-next-line
   }, [])
@@ -45,6 +56,7 @@ export default function PersonalPosts() {
               response.slice(0).reverse().map(post => (
                 <Posts
                   key={post._id}
+                  postId={post._id}
                   post={post}
                 />
               ))

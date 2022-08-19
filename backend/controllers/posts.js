@@ -114,14 +114,20 @@ exports.deletePost = (req, res, next) => {
           }
 
           if (post.userId === req.auth.userId || user.isAdmin) {
-            const filename = post.imageUrl.split('/images/')[1];
+            if (post.imageUrl) {
+              const filename = post.imageUrl.split('/images/')[1];
 
-            fs.unlink(`images/${filename}`, () => {
-              // Supprime le post sélectionné
+              fs.unlink(`images/${filename}`, () => {
+                // Supprime le post sélectionné
+                Post.deleteOne({ _id: req.params.id })
+                  .then(() => res.status(200).json({ message: 'Post supprimé !' }))
+                  .catch(error => res.status(400).json({ error }))
+              })
+            } else {
               Post.deleteOne({ _id: req.params.id })
                 .then(() => res.status(200).json({ message: 'Post supprimé !' }))
                 .catch(error => res.status(400).json({ error }))
-            })
+            }
 
           } else if (post.userId !== req.auth.userId || !user.isAdmin) {
             return res.status(401).json({ error: new Error('Requête non autorisée !') })
@@ -141,6 +147,13 @@ exports.getOnePost = (req, res, next) => {
 
 // Récupération de tous les posts
 exports.getAllPosts = (req, res, next) => {
+  Post.find()
+    .then(posts => res.status(200).json(posts))
+    .catch(error => res.status(400).json({ error }))
+}
+
+// Récupération de tous les posts d'un utilisateur
+exports.getUserPosts = (req, res, next) => {
   Post.find()
     .then(posts => res.status(200).json(posts))
     .catch(error => res.status(400).json({ error }))

@@ -7,7 +7,7 @@ import '../styles/Posts.css'
 import { useState } from 'react'
 import DeleteModal from './DeleteModal'
 
-export default function Posts({ post }) {
+export default function Posts({ post, postId }) {
   const params = useParams().userId
   const userId = sessionStorage.getItem('userID')
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -58,7 +58,11 @@ export default function Posts({ post }) {
 
 
       {
-        showDeleteModal && <DeleteModal />
+        showDeleteModal &&
+        <DeleteModal
+          postId={postId}
+          onClose={toggleDeleteModal}
+        />
       }
     </div>
   )

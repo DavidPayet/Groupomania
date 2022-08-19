@@ -15,6 +15,8 @@ router.delete('/:id', auth, postCtrl.deletePost)
 router.get('/:id', auth, postCtrl.getOnePost)
 // Récupère tous les posts
 router.get('/', postCtrl.getAllPosts)
+// Récupère tous les posts d'un seul utilisateur
+router.get('/',auth, postCtrl.getUserPosts)
 // Route pour les likes/dislikes
 router.post('/:id/like', auth, likeCtrl.likePost)
 
