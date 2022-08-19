@@ -1,0 +1,47 @@
+.DeleteModal {
+  width: clamp(200px, 75%, 500px);
+  border: 2px solid #FD2D01;
+  text-align: center;
+  padding: 30px 15px 0;
+  background: #f1f1f1;
+  border-radius: 10px;
+  font-size: 18px;
+  position: absolute;
+  top: 140px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.DeleteModal button {
+  margin: 20px 10px 15px;
+  width: 100px;
+  height: 10px;
+  border: 2px solid;
+  opacity: .9;
+}
+
+.DeleteModal button:nth-child(2) {
+  color: #4E5166;
+}
+
+.DeleteModal button:nth-child(3) {
+  color: #FD2D01;
+}
+
+.DeleteModal button:hover {
+  box-shadow: 10px 10px 23px -20px rgba(0, 0, 0, 0.75) inset;
+  transform: translate(1px, 1px);
+}
+
+.DeleteModal button:nth-child(2):hover,
+.DeleteModal button:nth-child(3):hover {
+  background: transparent;
+}
+
+@media screen and (max-width: 490px) {
+  .DeleteModal button {
+    margin: 20px 10px 15px;
+    width: 80px;
+    min-height: 30px;
+  }
+}

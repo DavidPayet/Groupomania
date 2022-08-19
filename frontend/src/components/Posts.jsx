@@ -4,10 +4,17 @@ import thumbUp from '../assets/thumbup-icon.svg'
 import editIcon from '../assets/edit-icon.svg'
 import deleteIcon from '../assets/delete-icon.svg'
 import '../styles/Posts.css'
+import { useState } from 'react'
+import DeleteModal from './DeleteModal'
 
-export default function Posts({ post }) {
+export default function Posts({ post, postId }) {
   const params = useParams().userId
   const userId = sessionStorage.getItem('userID')
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+
+  const toggleDeleteModal = () => {
+    setShowDeleteModal(!showDeleteModal)
+  }
 
   return (
     <div className="one-post">
@@ -17,7 +24,7 @@ export default function Posts({ post }) {
             <button className='editBtn'>
               <img src={editIcon} alt="modifier le post" />
             </button>
-            <button className='deleteBtn'>
+            <button onClick={toggleDeleteModal} className='deleteBtn'>
               <img src={deleteIcon} alt="supprimer le post" />
             </button>
           </div>
@@ -48,6 +55,15 @@ export default function Posts({ post }) {
         </span>
         <span className="like-nb">{post.likes}</span>
       </div>
+
+
+      {
+        showDeleteModal &&
+        <DeleteModal
+          postId={postId}
+          onClose={toggleDeleteModal}
+        />
+      }
     </div>
   )
 };
