@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import Posts from '../components/Posts'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import Loader from '../components/Loader'
 
 export default function HomePage() {
   const [response, setResponse] = useState(undefined)
@@ -17,7 +18,10 @@ export default function HomePage() {
     })
       .then(response => {
         setResponse(response.data)
-        setIsloading(!isLoading)
+
+        setTimeout(() => {
+          setIsloading(!isLoading)
+        }, 1000);
 
         response.status === 400 && console.log('Problème de récupération de données !!!')
       })
@@ -26,13 +30,13 @@ export default function HomePage() {
   }, [])
 
   return (
-    <div className="HomePage">
+    <div className='HomePage' style={{minHeight: '100vh'}}>
       <Navbar />
       <Header />
 
       {
         isLoading ? (
-          <span>Chargement...</span>
+          <Loader isLoading={isLoading} />
         ) : (
           <div className="posts-container">
             {
