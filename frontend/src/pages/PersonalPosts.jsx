@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useParams } from "react-router-dom";
+import Loader from '../components/Loader';
 import Navbar from "../components/Navbar";
 import Posts from '../components/Posts'
 import '../styles/PersonalPosts.css'
@@ -27,14 +28,11 @@ export default function PersonalPosts() {
       .then(response => {
         const myPosts = response.data
 
-        if (isAdmin === true) {
-          setResponse(myPosts)
-          setIsloading(!isLoading)
+        isAdmin === true ? setResponse(myPosts) : setResponse(myPosts.filter(el => el.userId === userId))
 
-        } else {
-          setResponse(myPosts.filter(el => el.userId === userId))
+        setTimeout(() => {
           setIsloading(!isLoading)
-        }
+        }, 1000);
 
         response.status === 400 && console.log('Problème de récupération de données !!!')
       })
@@ -49,7 +47,7 @@ export default function PersonalPosts() {
       <h2>Mes Posts</h2>
       {
         isLoading ? (
-          <span>Chargement...</span>
+          <Loader isLoading={isLoading} />
         ) : (
           <div className="posts-container">
             {
