@@ -5,15 +5,9 @@ const User = require('../models/User');
 const fs = require('fs');
 
 exports.createPost = (req, res, next) => {
-  console.log('====================================');
-  console.log(req);
-  console.log('====================================');
   // Gestion des images
   // const postObject = JSON.parse(req.body.post)
   const postObject = req.body
-  console.log('====================================');
-  console.log(postObject);
-  console.log('====================================');
   // Supprime l'id du front
   delete postObject._id
 
@@ -67,7 +61,7 @@ exports.modifyPost = (req, res, next) => {
 
           if (post.userId === req.auth.userId || user.isAdmin) {
             // MÀJ du fichier dans le dossier images en cas de modification unique de l'image du post
-            if (req.file) {
+            if (req.file && req.file.hasOwnProperty('imageUrl')) {
               Post.findOne({ _id: req.params.id })
                 .then(post => {
                   const filename = post.imageUrl.split('/images/')[1];
@@ -82,7 +76,7 @@ exports.modifyPost = (req, res, next) => {
             // MÀJ du post
             const postObject = req.file ?
               {
-                ...JSON.parse(req.body.post),
+                ...req.body,
                 imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
               } : { ...req.body };
 
