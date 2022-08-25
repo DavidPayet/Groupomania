@@ -37,3 +37,32 @@ input #file-upload-button {
 .sendPost-form input[type='file'] {
   margin-bottom: 10px;
 }
+
+/* EditPost */
+.SendPost.editPost {
+  position: fixed;
+  z-index: 99;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  background: #4e5166f3;
+
+}
+
+.close-editModal {
+  font-size: 20px;
+  background: transparent;
+  cursor: pointer;
+  border: none;
+  color: white;
+  margin-left: 97%;
+}
+
+.ctaBtn-container {
+  margin: auto;
+}
+
+.ctaBtn-container .ctaBtn {
+  margin: 40px 20px;
+}

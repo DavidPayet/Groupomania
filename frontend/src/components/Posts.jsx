@@ -6,14 +6,21 @@ import deleteIcon from '../assets/delete-icon.svg'
 import '../styles/Posts.css'
 import { useState } from 'react'
 import DeleteModal from './DeleteModal'
+import EditModal from './EditModal'
 
 export default function Posts({ post, postId }) {
   const params = useParams().userId
   const userId = sessionStorage.getItem('userID')
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
 
   const toggleDeleteModal = () => {
     setShowDeleteModal(!showDeleteModal)
+  }
+
+  const toggleEditModal = () => {
+    setShowEditModal(!showEditModal)
+    console.log(post);
   }
 
   return (
@@ -21,7 +28,7 @@ export default function Posts({ post, postId }) {
       {
         params === userId && (
           <div className="actionBtn">
-            <button className='editBtn'>
+            <button onClick={toggleEditModal} className='editBtn'>
               <img src={editIcon} alt="modifier le post" />
             </button>
             <button onClick={toggleDeleteModal} className='deleteBtn'>
@@ -62,6 +69,15 @@ export default function Posts({ post, postId }) {
         <DeleteModal
           postId={postId}
           onClose={toggleDeleteModal}
+        />
+      }
+
+      {
+        showEditModal &&
+        <EditModal
+          postId={postId}
+          onClose={toggleEditModal}
+          post={post}
         />
       }
     </div>
