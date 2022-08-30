@@ -1,5 +1,5 @@
-import Navbar from "../components/Navbar";
-import SendPost from "../components/SendPost";
+import Navbar from "../components/Navbar"
+import SendPost from "../components/SendPost"
 import '../styles/Dashboard.css'
 
 export default function Dashbord() {
@@ -10,4 +10,4 @@ export default function Dashbord() {
       <SendPost />
     </div>
   )
-};
+}

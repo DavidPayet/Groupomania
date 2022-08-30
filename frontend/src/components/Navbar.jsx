@@ -1,9 +1,9 @@
-import { useContext } from "react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext } from "react"
+import { useState } from "react"
+import { Link } from "react-router-dom"
 import logo from '../assets/icon-left-font-monochrome-white.svg'
-import Auth from "../contexts/Auth";
-import { logout } from "../services/authApi";
+import Auth from "../contexts/Auth"
+import { logout } from "../services/authApi"
 import '../styles/Navbar.css'
 
 export default function Navbar() {
@@ -16,7 +16,7 @@ export default function Navbar() {
   }
 
   const handleLogout = () => {
-    console.log('Déconnexion !!!!!');
+    console.log('Déconnexion !!!');
     logout()
     setIsAuthenticated(false)
   }
@@ -57,4 +57,4 @@ export default function Navbar() {
       </button>
     </>
   )
-};
+}

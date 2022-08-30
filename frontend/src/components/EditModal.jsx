@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import Modal from './Modal';
-import '../styles/SendPost.css'
+import { useState } from 'react'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
+import Modal from './Modal'
+import '../styles/Dashboard.css'
 
 export default function EditModal({ onClose, post }) {
   const { userId } = useParams()
@@ -86,11 +86,13 @@ export default function EditModal({ onClose, post }) {
           name='imageUrl'
           onChange={handleChangeImgUrl}
         />
+
         <div className="ctaBtn-container">
           <button onClick={onClose} className='ctaBtn'>Annuler</button>
           <button type='submit' className='ctaBtn'>Modifier</button>
         </div>
       </form>
+
       {
         visibleModal && <Modal
           id={modalParams.id}
@@ -101,4 +103,4 @@ export default function EditModal({ onClose, post }) {
       }
     </div>
   )
-};
+}

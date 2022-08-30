@@ -27,8 +27,11 @@ export default function ConnectionPage() {
         <Link to="/accueil">
           <img className='icon-right' src={iconSecondary} alt="icone groupomania" />
         </Link>
+
         <h1>Groupomania</h1>
+
         <p>Rejoignez le réseau social de votre entreprise.</p>
+
         <button className='ctaBtn' onClick={toggleSignupForm}>S'inscrire</button>
         <span className='or'>OU</span>
         <button className='ctaBtn' onClick={toggleLoginForm}>Se connecter</button>
@@ -37,6 +40,7 @@ export default function ConnectionPage() {
           showSignupForm={showSignupForm}
           toggleSignupForm={toggleSignupForm}
         />
+
         <LoginForm
           showLoginForm={showLoginForm}
           toggleLoginForm={toggleLoginForm}
@@ -44,4 +48,4 @@ export default function ConnectionPage() {
       </div>
     </div>
   )
-};
+}

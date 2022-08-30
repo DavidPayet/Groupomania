@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from 'axios'
 import { useState } from 'react'
-import { useParams } from 'react-router-dom';
-import '../styles/SendPost.css'
-import Modal from './Modal';
+import { useParams } from 'react-router-dom'
+import '../styles/Dashboard.css'
+import Modal from './Modal'
 
 export default function SendPost() {
   const { userId } = useParams()
@@ -49,20 +49,18 @@ export default function SendPost() {
       )
       .then(res => {
         if (res.status === 201) {
-          console.log('====== RESPONSE ======', res);
+          console.log('====== RES ======', res);
           setDescription('')
           setImageUrl(null)
           clearInput()
           sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert201', activeClassName: 'succes', message: "Post envoyé avec succès !" }))
           setVisibleModal(true)
-          console.log('====== RESPONSE ======', { userId, description, imageUrl });
 
         }
 
       })
       .catch(error => {
         console.log('====== ERROR ======', error);
-        console.log('====== ERROR ======', { userId, description, imageUrl });
         sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert400', activeClassName: 'alert', message: "Votre post n'a pas pu être envoyé." }))
         setVisibleModal(true)
       })
@@ -98,6 +96,7 @@ export default function SendPost() {
 
         <button className='ctaBtn'>Envoyer</button>
       </form>
+
       {
         visibleModal && <Modal
           id={modalParams.id}
@@ -108,4 +107,4 @@ export default function SendPost() {
       }
     </div>
   )
-};
+}

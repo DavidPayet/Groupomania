@@ -20,14 +20,13 @@ export async function login(credentials) {
         sessionStorage.setItem('userID', response.data.userId)
         sessionStorage.setItem('userToken', response.data.token)
         sessionStorage.setItem('isAdmin', response.data.isAdmin)
-        // sessionStorage.setItem('userData', JSON.stringify(response.data))
         console.log('===== RES AUTH =====', response);
 
         return true
       }
     })
     .catch(error => {
-      console.log('======CATCH=======', error)
+      console.log('====== CATCH ======', error)
       
       if (error.response.status === 401) {
         sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert401', activeClassName: 'alert', message: "Ce compte n'existe pas. \n Veuillez essayer avec un email valide ou créez un compte." }))

@@ -5,15 +5,12 @@ import thumbUp from '../assets/thumbup-icon.svg'
 export default function Like({ post }) {
   const userToken = sessionStorage.getItem('userToken')
   const userId = sessionStorage.getItem('userID')
-
   const likes = post.likes
   const usersLiked = post.usersLiked
-
   const [like, setLike] = useState(likes)
   const [postAlreadyLiked, setPostAlreadyLiked] = useState(usersLiked.some(user => user === userId))
 
   const handleLike = async () => {
-    console.log(post);
 
     await axios
       .post(`http://localhost:8000/api/posts/${post._id}/like`,
@@ -29,12 +26,7 @@ export default function Like({ post }) {
         }
       )
       .then(res => {
-        console.log('================ RES DEBUT ====================');
-        console.log(res);
-        console.log(post);
-        console.log(usersLiked);
-        console.log(postAlreadyLiked);
-        console.log('================ RES FIN ====================');
+        console.log('====== RES ======', res)
 
         setPostAlreadyLiked(!postAlreadyLiked)
         postAlreadyLiked
@@ -43,9 +35,7 @@ export default function Like({ post }) {
 
       })
       .catch(err => {
-        console.log('====================================');
-        console.log(err);
-        console.log('====================================');
+        console.log('====== RES ======', err)
       })
 
   }
@@ -58,4 +48,4 @@ export default function Like({ post }) {
       <span className="like-nb">{like}</span>
     </div>
   )
-};
+}

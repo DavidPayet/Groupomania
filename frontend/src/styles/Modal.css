@@ -21,7 +21,7 @@
   padding: 20px;
 }
 
-.Modal > p {
+.Modal>p {
   margin: 0;
 }
 
@@ -33,7 +33,7 @@
   align-items: center;
 }
 
-.Modal.alert > p {
+.Modal.alert>p {
   color: red;
 }
 
@@ -45,19 +45,20 @@
   align-items: center;
 }
 
-.Modal.succes > p {
+.Modal.succes>p {
   color: #01ff01;
 }
 
-.closeModalBtn.alert, .closeModalBtn.succes {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background: transparent;
-    cursor: pointer;
-    border: none;
-    font-size: 20px;
-    font-weight: 300;
+.closeModalBtn.alert,
+.closeModalBtn.succes {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: transparent;
+  cursor: pointer;
+  border: none;
+  font-size: 20px;
+  font-weight: 300;
 }
 
 .closeModalBtn.alert {
