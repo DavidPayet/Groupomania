@@ -28,12 +28,11 @@ export async function login(credentials) {
     })
     .catch(error => {
       console.log('======CATCH=======', error)
+      
       if (error.response.status === 401) {
-        // alert("Ce compte n'existe pas. \n Veuillez essayer avec un email valide ou créez un compte.")
         sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert401', activeClassName: 'alert', message: "Ce compte n'existe pas. \n Veuillez essayer avec un email valide ou créez un compte." }))
       }
       if (error.response.status === 418) {
-        // alert("Mot de passe incorrect !")
         sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert418', activeClassName: 'alert', message: "Mot de passe incorrect !" }))
       }
     })

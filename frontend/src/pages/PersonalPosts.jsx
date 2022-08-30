@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { useParams } from "react-router-dom";
-import Loader from '../components/Loader';
-import Navbar from "../components/Navbar";
+import { useParams } from "react-router-dom"
+import Loader from '../components/Loader'
+import Navbar from "../components/Navbar"
 import Posts from '../components/Posts'
 import '../styles/PersonalPosts.css'
 

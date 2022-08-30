@@ -5,6 +5,10 @@ exports.likePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
     .then(post => {
 
+      console.log('====================================');
+      console.log(post);
+      console.log('====================================');
+
       // Si userId n'est pas dans le tableau usersLiked et que like = 1
       if (!post.usersLiked.includes(req.body.userId) && req.body.like === 1) {
         Post.updateOne({ _id: req.params.id },
@@ -13,7 +17,10 @@ exports.likePost = (req, res, next) => {
             $push: { usersLiked: req.body.userId }
           })
           .then(() => res.status(201).json({ message: 'like +1' }))
-          .catch(error => res.status(400).json({ error }))
+          .catch(error => {
+            console.log(error);
+            res.status(400).json({ error })
+          })
       }
 
       // Si userId est dans le tableau usersLiked et que like = 0
