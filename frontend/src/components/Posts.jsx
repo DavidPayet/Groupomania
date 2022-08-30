@@ -1,12 +1,12 @@
 import { useParams } from 'react-router-dom'
 import profilIcon from '../assets/profile-icon.svg'
-import thumbUp from '../assets/thumbup-icon.svg'
 import editIcon from '../assets/edit-icon.svg'
 import deleteIcon from '../assets/delete-icon.svg'
 import '../styles/Posts.css'
 import { useState } from 'react'
 import DeleteModal from './DeleteModal'
 import EditModal from './EditModal'
+import Like from './Like'
 
 export default function Posts({ post, postId }) {
   const params = useParams().userId
@@ -20,7 +20,6 @@ export default function Posts({ post, postId }) {
 
   const toggleEditModal = () => {
     setShowEditModal(!showEditModal)
-    console.log(post);
   }
 
   return (
@@ -56,13 +55,9 @@ export default function Posts({ post, postId }) {
         )
       }
 
-      <div className="like-action">
-        <span className="thumbup-icon">
-          <img src={thumbUp} alt="pouce en l'air" />
-        </span>
-        <span className="like-nb">{post.likes}</span>
-      </div>
-
+      <Like
+        post={post}
+      />
 
       {
         showDeleteModal &&
