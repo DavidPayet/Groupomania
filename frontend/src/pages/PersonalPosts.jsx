@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom"
 import Loader from '../components/Loader'
 import Navbar from "../components/Navbar"
 import Posts from '../components/Posts'
-import '../styles/PersonalPosts.css'
 
 export default function PersonalPosts() {
   const [response, setResponse] = useState(undefined)
@@ -40,7 +39,7 @@ export default function PersonalPosts() {
   }, [])
 
   return (
-    <div className="PersonalPosts">
+    <div style={{ minHeight: '100vh' }}>
       <Navbar />
       <h2>Mes Posts</h2>
       {
