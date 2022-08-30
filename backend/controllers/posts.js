@@ -6,7 +6,6 @@ const fs = require('fs');
 
 exports.createPost = (req, res, next) => {
   // Gestion des images
-  // const postObject = JSON.parse(req.body.post)
   const postObject = req.body
   // Supprime l'id du front
   delete postObject._id
@@ -24,10 +23,7 @@ exports.createPost = (req, res, next) => {
     // Enregistre le model dans la base de données
     postWithoutImg.save()
       .then(() => res.status(201).json({ message: 'Post enregistré !' }))
-      .catch(error => {
-        res.status(400).json({ error })
-        console.log(error);
-      })
+      .catch(error => res.status(400).json({ error }))
 
   } else {
 
@@ -44,10 +40,7 @@ exports.createPost = (req, res, next) => {
     // Enregistre le model dans la base de données
     post.save()
       .then(() => res.status(201).json({ message: 'Post enregistré !' }))
-      .catch(error => {
-        res.status(400).json({ error })
-        console.log(error);
-      })
+      .catch(error => res.status(400).json({ error }))
 
   }
 }

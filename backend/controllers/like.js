@@ -5,10 +5,6 @@ exports.likePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
     .then(post => {
 
-      console.log('====================================');
-      console.log(post);
-      console.log('====================================');
-
       // Si userId n'est pas dans le tableau usersLiked et que like = 1
       if (!post.usersLiked.includes(req.body.userId) && req.body.like === 1) {
         Post.updateOne({ _id: req.params.id },
@@ -31,28 +27,6 @@ exports.likePost = (req, res, next) => {
             $pull: { usersLiked: req.body.userId }
           })
           .then(() => res.status(201).json({ message: 'like -1' }))
-          .catch(error => res.status(400).json({ error }))
-      }
-
-      // Si userId n'est pas dans le tableau usersDisliked et que dislike = 1
-      if (!post.usersDisliked.includes(req.body.userId) && req.body.like === -1) {
-        Post.updateOne({ _id: req.params.id },
-          {
-            $inc: { dislikes: 1 },
-            $push: { usersDisliked: req.body.userId }
-          })
-          .then(() => res.status(201).json({ message: 'dislike +1' }))
-          .catch(error => res.status(400).json({ error }))
-      }
-
-      // Si userId est dans le tableau usersDisliked et que dislike = 0
-      if (post.usersDisliked.includes(req.body.userId) && req.body.like === 0) {
-        Post.updateOne({ _id: req.params.id },
-          {
-            $inc: { dislikes: -1 },
-            $pull: { usersDisliked: req.body.userId }
-          })
-          .then(() => res.status(201).json({ message: 'dislike -1' }))
           .catch(error => res.status(400).json({ error }))
       }
 
