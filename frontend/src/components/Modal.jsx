@@ -25,4 +25,4 @@ export default function Modal({ id, message, activeClassName, visibleModal }) {
       </div>
     </div>, document.body
   )
-};
+}

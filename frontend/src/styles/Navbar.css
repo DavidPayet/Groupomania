@@ -84,11 +84,11 @@ nav {
     transform: translateY(-100%);
     transition: transform .3s cubic-bezier(.73, .11, .67, .84);
   }
-  
+
   .menu.active {
     transform: translate(0);
   }
-  
+
   .menu a {
     display: block;
     margin: 10px 0;

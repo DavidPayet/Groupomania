@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 import '../styles/DeleteModal.css'
 
 export default function DeleteModal({ onClose, postId }) {
@@ -25,4 +25,4 @@ export default function DeleteModal({ onClose, postId }) {
       <button onClick={handleDelete} className='ctaBtn'>Oui</button>
     </div>
   )
-};
+}

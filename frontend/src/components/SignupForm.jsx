@@ -34,7 +34,6 @@ export default function SignupForm({ showSignupForm, toggleSignupForm }) {
       .then(res => {
         if (res.status === 201) {
           setUser({ email: '', password: '', passwordConf: '' })
-          // alert('Compte créé avec succès ! \n Vous pouvez dès à présent vous connecter.')
           sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert201', activeClassName: 'succes', message: "Compte créé avec succès ! \n Vous pouvez dès à présent vous connecter." }))
           toggleSignupForm()
           setVisibleModal(true)
@@ -44,7 +43,6 @@ export default function SignupForm({ showSignupForm, toggleSignupForm }) {
       .catch(error => {
         console.log(error)
         if (error.response.status === 409) {
-          // alert('Cet email possède déjà un compte');
           sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert401', activeClassName: 'alert', message: "Cet email possède déjà un compte." }))
           setVisibleModal(true)
           return
@@ -96,7 +94,6 @@ export default function SignupForm({ showSignupForm, toggleSignupForm }) {
           visibleModal={setVisibleModal}
         />
       }
-
     </div>
   )
-};
+}

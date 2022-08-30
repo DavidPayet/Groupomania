@@ -7,7 +7,7 @@
   border-radius: 10px;
   font-size: 18px;
   position: absolute;
-  top: 140px;
+  top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
 }

@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import AuthenticatedRoute from './components/AuthenticatedRoute';
-import Footer from './components/Footer';
-import Auth from './contexts/Auth';
+import AuthenticatedRoute from './components/AuthenticatedRoute'
+import Footer from './components/Footer'
+import Auth from './contexts/Auth'
 import ConnectionPage from './pages/ConnectionPage'
 import HomePage from './pages/HomePage'
 import Dashboard from './pages/Dashboard'
 import PersonalPosts from './pages/PersonalPosts'
 import { hasAuthenticated } from './services/authApi'
 
-function App() {
+export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(hasAuthenticated())
 
   return (
@@ -39,7 +39,5 @@ function App() {
       </Auth.Provider>
       <Footer />
     </>
-  );
+  )
 }
-
-export default App;

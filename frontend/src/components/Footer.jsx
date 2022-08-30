@@ -6,4 +6,4 @@ export default function Footer() {
       <p>©2022 Groupomania.</p>
     </footer>
   )
-};
+}

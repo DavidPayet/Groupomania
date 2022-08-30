@@ -15,7 +15,6 @@ export default function PersonalPosts() {
   const userToken = sessionStorage.getItem('userToken')
   const isAdmin = JSON.parse(sessionStorage.getItem('isAdmin'))
 
-
   useEffect(() => {
     axios({
       method: 'GET',
@@ -40,7 +39,6 @@ export default function PersonalPosts() {
     // eslint-disable-next-line
   }, [])
 
-
   return (
     <div className="PersonalPosts">
       <Navbar />
@@ -64,4 +62,4 @@ export default function PersonalPosts() {
       }
     </div>
   )
-};
+}

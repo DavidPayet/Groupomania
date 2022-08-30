@@ -20,4 +20,4 @@ export default function FormInputs({ label, htmlFor, onChange, errorMessage, ...
       <span>{errorMessage}</span>
     </div>
   )
-};
+}

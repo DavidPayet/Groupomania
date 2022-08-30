@@ -40,7 +40,6 @@ export default function Posts({ post, postId }) {
         <span className="avatar">
           <img src={profilIcon} alt="icone profil" />
         </span>
-        {/* <span className="profil-name">{post.name}</span> */}
       </div>
 
       <div className="post-content">
@@ -77,4 +76,4 @@ export default function Posts({ post, postId }) {
       }
     </div>
   )
-};
+}
