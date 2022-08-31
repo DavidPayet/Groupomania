@@ -24,4 +24,4 @@ Here is a link that may help you : [MongoDB Atlas account](https://www.mongodb.c
 When all are ready, in the backend folder, rename `.env.example` file by `.env` and replace all 'xxxxxx' by your own MongoDB variables.
 
 ### The server is listening on 
-`http://localhost:3000`
+`http://localhost:8000`
