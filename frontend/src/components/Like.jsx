@@ -25,8 +25,7 @@ export default function Like({ post }) {
           }
         }
       )
-      .then(res => {
-        console.log('====== RES ======', res)
+      .then(() => {
 
         setPostAlreadyLiked(!postAlreadyLiked)
         postAlreadyLiked
@@ -35,7 +34,7 @@ export default function Like({ post }) {
 
       })
       .catch(err => {
-        console.log('====== RES ======', err)
+        console.log(err)
       })
 
   }

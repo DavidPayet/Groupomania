@@ -16,7 +16,6 @@ export default function Navbar() {
   }
 
   const handleLogout = () => {
-    console.log('Déconnexion !!!');
     logout()
     setIsAuthenticated(false)
   }

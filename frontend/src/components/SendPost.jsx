@@ -49,7 +49,6 @@ export default function SendPost() {
       )
       .then(res => {
         if (res.status === 201) {
-          console.log('====== RES ======', res);
           setDescription('')
           setImageUrl(null)
           clearInput()
@@ -60,7 +59,7 @@ export default function SendPost() {
 
       })
       .catch(error => {
-        console.log('====== ERROR ======', error);
+        console.log(error);
         sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert400', activeClassName: 'alert', message: "Votre post n'a pas pu être envoyé." }))
         setVisibleModal(true)
       })

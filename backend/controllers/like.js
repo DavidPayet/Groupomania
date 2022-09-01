@@ -13,10 +13,7 @@ exports.likePost = (req, res, next) => {
             $push: { usersLiked: req.body.userId }
           })
           .then(() => res.status(201).json({ message: 'like +1' }))
-          .catch(error => {
-            console.log(error);
-            res.status(400).json({ error })
-          })
+          .catch(error => res.status(400).json({ error }))
       }
 
       // Si userId est dans le tableau usersLiked et que like = 0

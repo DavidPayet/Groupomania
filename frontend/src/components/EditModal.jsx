@@ -42,18 +42,13 @@ export default function EditModal({ onClose, post }) {
         }
       )
       .then(res => {
-        console.log('====== RESPONSE ======', res);
-
         if (res.status === 200) {
           setVisibleModal(true)
           sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert200', activeClassName: 'succes', message: "Modification réussie !" }))
-          console.log('====== RESPONSE ======', { userId, description, imageUrl });
         }
-
       })
       .catch(error => {
-        console.log('====== ERROR ======', error);
-        console.log('====== ERROR ======', { userId, description, imageUrl });
+        console.log(error);
         sessionStorage.setItem('modalParams', JSON.stringify({ id: 'alert400', activeClassName: 'alert', message: "Votre post n'a pas pu être modifié." }))
         setVisibleModal(true)
       })
