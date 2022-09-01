@@ -5,7 +5,6 @@ export default function Modal({ id, message, activeClassName, visibleModal }) {
   const reloadSuccesEditModal = JSON.parse(sessionStorage.getItem('modalParams'))
 
   const handleCloseModal = () => {
-    console.log('MODAL CLOSED');
 
     document.querySelector('.Modal').style.display = 'none'
     visibleModal(false)
