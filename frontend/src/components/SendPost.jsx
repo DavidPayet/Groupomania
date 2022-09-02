@@ -78,8 +78,8 @@ export default function SendPost() {
         <textarea
           name="description"
           id="description"
-          minLength='5'
-          maxLength='300'
+          minLength='3'
+          maxLength='1500'
           placeholder='Écrivez votre message'
           required
           onChange={handleChangePost}
