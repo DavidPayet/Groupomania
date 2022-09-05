@@ -24,9 +24,11 @@ export default function ConnectionPage() {
       </div>
 
       <div className="right-side">
-        <Link to="/accueil">
-          <img className='icon-right' src={iconSecondary} alt="icone groupomania" />
-        </Link>
+        <div className="icon-container">
+          <Link to="/accueil">
+            <img className='icon-right' src={iconSecondary} alt="icone groupomania" />
+          </Link>
+        </div>
 
         <h1>Groupomania</h1>
 
