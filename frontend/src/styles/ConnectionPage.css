@@ -23,8 +23,48 @@
   flex-direction: column;
 }
 
-.right-side a {
+.icon-container {
+  position: relative;
   width: max-content;
+}
+
+.icon-container:after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  transform: scale(0.75);
+  -webkit-filter: blur(20px);
+  -moz-filter: blur(20px);
+  -ms-filter: blur(20px);
+  filter: blur(20px);
+  background: linear-gradient(270deg, #FFD7D7, #4E5166);
+  background-size: 200% 200%;
+  animation: animateGlow 3s ease infinite;
+}
+
+@keyframes animateGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.right-side a {
+  position: relative;
+  width: max-content;
+  z-index: 99;
 }
 
 .icon-right {

@@ -76,8 +76,8 @@ export default function SendPost() {
       >
         <label htmlFor='description'>Message</label>
         <textarea
-          name="description"
-          id="description"
+          name='description'
+          id='description'
           minLength='3'
           maxLength='1500'
           placeholder='Écrivez votre message'
